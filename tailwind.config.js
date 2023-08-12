@@ -9,6 +9,9 @@ export default {
         cursor: "#34404D",
       },
     },
+    fontFamily: {
+      monospace: ["Source Code Pro", "monospace"],
+    },
   },
   plugins: [],
 };

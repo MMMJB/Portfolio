@@ -1,3 +1,5 @@
+@import url("https://fonts.googleapis.com/css2?family=Source+Code+Pro:wght@400;500;600&display=swap");
+
 /*
 ! tailwindcss v3.3.3 | MIT License | https://tailwindcss.com
 */
@@ -434,7 +436,7 @@ video {
   display: none;
 }
 
-*, ::before, ::after {
+*, ::before, ::after{
   --tw-border-spacing-x: 0;
   --tw-border-spacing-y: 0;
   --tw-translate-x: 0;
@@ -484,7 +486,7 @@ video {
   --tw-backdrop-sepia:  ;
 }
 
-::backdrop {
+::backdrop{
   --tw-border-spacing-x: 0;
   --tw-border-spacing-y: 0;
   --tw-translate-x: 0;
@@ -534,68 +536,121 @@ video {
   --tw-backdrop-sepia:  ;
 }
 
-.absolute {
+.pointer-events-none{
+  pointer-events: none;
+}
+
+.absolute{
   position: absolute;
 }
 
-.h-full {
-  height: 100%;
+.grid{
+  display: grid;
 }
 
-.h-4 {
+.h-4{
   height: 1rem;
 }
 
-.h-6 {
-  height: 1.5rem;
+.h-full{
+  height: 100%;
 }
 
-.min-h-screen {
+.h-screen{
+  height: 100vh;
+}
+
+.min-h-screen{
   min-height: 100vh;
 }
 
-.w-screen {
-  width: 100vw;
-}
-
-.w-4 {
+.w-4{
   width: 1rem;
 }
 
-.w-6 {
-  width: 1.5rem;
+.w-full{
+  width: 100%;
 }
 
-.cursor-none {
-  cursor: none;
+.w-max{
+  width: -moz-max-content;
+  width: max-content;
 }
 
-.overflow-x-hidden {
-  overflow-x: hidden;
+.w-screen{
+  width: 100vw;
 }
 
-.rounded-full {
+.place-items-center{
+  place-items: center;
+}
+
+.overflow-hidden{
+  overflow: hidden;
+}
+
+.whitespace-nowrap{
+  white-space: nowrap;
+}
+
+.rounded-\[5\%\]{
+  border-radius: 5%;
+}
+
+.rounded-full{
   border-radius: 9999px;
 }
 
-.border-2 {
+.border-2{
   border-width: 2px;
 }
 
-.border-\[1px\] {
-  border-width: 1px;
-}
-
-.border-cursor {
+.border-cursor{
   --tw-border-opacity: 1;
   border-color: rgb(52 64 77 / var(--tw-border-opacity));
 }
 
-.bg-background {
+.bg-background{
   --tw-bg-opacity: 1;
   background-color: rgb(29 39 49 / var(--tw-bg-opacity));
 }
 
-.bg-cursor\/10 {
+.bg-cursor\/10{
   background-color: rgb(52 64 77 / 0.1);
+}
+
+.bg-\[url\(\'\/Images\/background\.svg\'\)\]{
+  background-image: url('/Images/background.svg');
+}
+
+.bg-clip-text{
+  -webkit-background-clip: text;
+          background-clip: text;
+}
+
+.bg-no-repeat{
+  background-repeat: no-repeat;
+}
+
+.font-monospace{
+  font-family: Source Code Pro, monospace;
+}
+
+.text-base\/\[1\.15em\]{
+  font-size: 1rem;
+  line-height: 1.15em;
+}
+
+.font-bold{
+  font-weight: 700;
+}
+
+.bg-clip-text {
+  background-clip: text;
+  -webkit-background-clip: text;
+  color: transparent;
+}
+
+.bg-h-max {
+  background-size: auto 100%;
 }

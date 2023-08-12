@@ -32,7 +32,7 @@ export default function Cursor() {
     !matchMedia("(pointer:none)").matches && (
       <div
         ref={cursorRef}
-        className="absolute h-4 w-4 rounded-full border-2 border-cursor bg-cursor/10"
+        className="pointer-events-none absolute h-4 w-4 rounded-full border-2 border-cursor bg-cursor/10"
       ></div>
     )
   );
