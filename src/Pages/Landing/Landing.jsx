@@ -12,7 +12,7 @@ export default function Landing() {
   useEffect((_) => {
     const fetchCodeMask = async (_) => {
       let codeMask = await fetch("/code.txt").then((r) => r.text());
-      codeMask = codeMask.substring(0, 60 * numLines);
+      codeMask = codeMask.substring(0, 120 * numLines);
 
       setCodeMask(codeMask);
     };
@@ -21,16 +21,21 @@ export default function Landing() {
   }, []);
 
   return (
-    <div className="grid h-screen w-full place-items-center">
+    <div className="grid w-full place-items-center">
       {codeMask && (
         <div
           style={{
             backgroundColor: interpolateColors(colors[0], colors[1], scrollPos),
           }}
-          className="bg-h-max w-max whitespace-nowrap rounded-[5%] bg-[url('/Images/background.svg')] bg-clip-text bg-no-repeat font-monospace text-base/[1.15em] font-bold"
+          data-mask-img
+          className="bg-h-max w-max whitespace-nowrap bg-[url('/Images/background.svg')] bg-clip-text bg-no-repeat font-monospace text-sm/[1.25em] font-bold"
         >
-          {codeMask.match(/(.{60})/g).map((v, i) => {
-            return <p key={i}>{v}</p>;
+          {codeMask.match(/(.{120})/g).map((v, i) => {
+            return (
+              <p data-mask-img key={i}>
+                {v}
+              </p>
+            );
           })}
         </div>
       )}

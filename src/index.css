@@ -536,6 +536,29 @@ video {
   --tw-backdrop-sepia:  ;
 }
 
+div[data-mask-img] {
+  position: relative;
+}
+
+div[data-mask-img]::after {
+  content: "";
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  left: 0;
+  top: 0;
+  background-image: inherit;
+  background-color: inherit;
+  background-size: inherit;
+  -webkit-clip-path: circle(
+      var(--maskScale) at var(--maskX, -64px) var(--maskY, -64px)
+    );
+          clip-path: circle(
+      var(--maskScale) at var(--maskX, -64px) var(--maskY, -64px)
+    );
+  /* animation: maskClose 5s ease-out forwards; */
+}
+
 .pointer-events-none{
   pointer-events: none;
 }
@@ -544,28 +567,28 @@ video {
   position: absolute;
 }
 
+.z-50{
+  z-index: 50;
+}
+
 .grid{
   display: grid;
 }
 
-.h-4{
-  height: 1rem;
+.aspect-square{
+  aspect-ratio: 1 / 1;
 }
 
 .h-full{
   height: 100%;
 }
 
-.h-screen{
-  height: 100vh;
-}
-
 .min-h-screen{
   min-height: 100vh;
 }
 
-.w-4{
-  width: 1rem;
+.w-2{
+  width: 0.5rem;
 }
 
 .w-full{
@@ -581,6 +604,14 @@ video {
   width: 100vw;
 }
 
+.transform{
+  transform: translate(var(--tw-translate-x), var(--tw-translate-y)) rotate(var(--tw-rotate)) skewX(var(--tw-skew-x)) skewY(var(--tw-skew-y)) scaleX(var(--tw-scale-x)) scaleY(var(--tw-scale-y));
+}
+
+.cursor-none{
+  cursor: none;
+}
+
 .place-items-center{
   place-items: center;
 }
@@ -593,21 +624,8 @@ video {
   white-space: nowrap;
 }
 
-.rounded-\[5\%\]{
-  border-radius: 5%;
-}
-
 .rounded-full{
   border-radius: 9999px;
-}
-
-.border-2{
-  border-width: 2px;
-}
-
-.border-cursor{
-  --tw-border-opacity: 1;
-  border-color: rgb(52 64 77 / var(--tw-border-opacity));
 }
 
 .bg-background{
@@ -615,8 +633,9 @@ video {
   background-color: rgb(29 39 49 / var(--tw-bg-opacity));
 }
 
-.bg-cursor\/10{
-  background-color: rgb(52 64 77 / 0.1);
+.bg-cursor{
+  --tw-bg-opacity: 1;
+  background-color: rgb(52 64 77 / var(--tw-bg-opacity));
 }
 
 .bg-\[url\(\'\/Images\/background\.svg\'\)\]{
@@ -636,13 +655,23 @@ video {
   font-family: Source Code Pro, monospace;
 }
 
-.text-base\/\[1\.15em\]{
-  font-size: 1rem;
-  line-height: 1.15em;
+.text-sm\/\[1\.25em\]{
+  font-size: 0.875rem;
+  line-height: 1.25em;
 }
 
 .font-bold{
   font-weight: 700;
+}
+
+.transition-transform{
+  transition-property: transform;
+  transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
+  transition-duration: 150ms;
+}
+
+.duration-200{
+  transition-duration: 200ms;
 }
 
 .bg-clip-text {
@@ -653,4 +682,18 @@ video {
 
 .bg-h-max {
   background-size: auto 100%;
+}
+
+@property --maskScale {
+  syntax: "<length>";
+
+  initial-value: 64px;
+
+  inherits: false;
+}
+
+@keyframes maskClose {
+  to {
+    --maskSale: 0px;
+  }
 }

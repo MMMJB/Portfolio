@@ -5,22 +5,32 @@ export default function Cursor() {
     x: window.innerWidth / 2,
     y: window.innerHeight / 2,
   });
-  const sizeRef = useRef(16);
   const cursorRef = useRef();
 
-  const moveMouse = (x, y) => {
-    posRef.current.x = x - sizeRef.current / 2;
-    posRef.current.y = y - sizeRef.current / 2;
+  const [expanded, setExpanded] = useState(false);
+
+  const moveMask = (x, y) => {
+    document.documentElement.style.setProperty("--maskX", `${x}px`);
+    document.documentElement.style.setProperty("--maskY", `${y}px`);
   };
 
   useEffect((_) => {
     const onMouseMove = (e) => {
       if (cursorRef.current === undefined) return;
 
-      moveMouse(e.pageX, e.pageY);
+      const validHover = "maskImg" in e.target.dataset;
+      setExpanded(validHover);
 
-      cursorRef.current.style.top = `${posRef.current.y}px`;
-      cursorRef.current.style.left = `${posRef.current.x}px`;
+      posRef.current.x = e.pageX;
+      posRef.current.y = e.pageY;
+
+      const x = posRef.current.x,
+        y = posRef.current.y;
+
+      cursorRef.current.style.top = `${y}px`;
+      cursorRef.current.style.left = `${x}px`;
+
+      moveMask(validHover ? x : -64, validHover ? y : -64);
     };
 
     window.addEventListener("mousemove", onMouseMove);
@@ -32,7 +42,10 @@ export default function Cursor() {
     !matchMedia("(pointer:none)").matches && (
       <div
         ref={cursorRef}
-        className="pointer-events-none absolute h-4 w-4 rounded-full border-2 border-cursor bg-cursor/10"
+        style={{
+          transform: `scale(${expanded ? 16 : 1})`,
+        }}
+        className="pointer-events-none absolute z-50 aspect-square w-2 rounded-full bg-cursor transition-transform duration-200"
       ></div>
     )
   );
