@@ -9,11 +9,6 @@ export default function Cursor() {
 
   const [expanded, setExpanded] = useState(false);
 
-  const moveMask = (x, y) => {
-    document.documentElement.style.setProperty("--maskX", `${x}px`);
-    document.documentElement.style.setProperty("--maskY", `${y}px`);
-  };
-
   useEffect((_) => {
     const onMouseMove = (e) => {
       if (cursorRef.current === undefined) return;
@@ -24,13 +19,8 @@ export default function Cursor() {
       posRef.current.x = e.pageX;
       posRef.current.y = e.pageY;
 
-      const x = posRef.current.x,
-        y = posRef.current.y;
-
-      cursorRef.current.style.top = `${y}px`;
-      cursorRef.current.style.left = `${x}px`;
-
-      moveMask(validHover ? x : -64, validHover ? y : -64);
+      cursorRef.current.style.top = `${posRef.current.y}px`;
+      cursorRef.current.style.left = `${posRef.current.x}px`;
     };
 
     window.addEventListener("mousemove", onMouseMove);
