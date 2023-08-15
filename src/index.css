@@ -552,8 +552,16 @@ video {
   display: grid;
 }
 
+.hidden{
+  display: none;
+}
+
 .aspect-square{
   aspect-ratio: 1 / 1;
+}
+
+.h-\[50vh\]{
+  height: 50vh;
 }
 
 .h-full{
@@ -586,6 +594,10 @@ video {
 
 .cursor-none{
   cursor: none;
+}
+
+.resize{
+  resize: both;
 }
 
 .place-items-center{

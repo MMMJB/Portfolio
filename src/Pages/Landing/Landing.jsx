@@ -23,7 +23,15 @@ export default function Landing() {
 
   return (
     <div className="grid w-full place-items-center">
-      {maskText && <CodeMask styles="w-1/2" text={maskText} />}
+      <img
+        id="background"
+        src="/Images/background.svg"
+        width="1600"
+        className="hidden"
+      />
+      {maskText && (
+        <CodeMask styles="w-1/2 h-[50vh]" img="background" text={maskText} />
+      )}
     </div>
   );
 }
