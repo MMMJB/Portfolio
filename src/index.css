@@ -596,10 +596,6 @@ video {
   cursor: none;
 }
 
-.resize{
-  resize: both;
-}
-
 .place-items-center{
   place-items: center;
 }

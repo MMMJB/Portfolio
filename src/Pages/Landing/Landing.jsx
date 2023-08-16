@@ -27,6 +27,7 @@ export default function Landing() {
         id="background"
         src="/Images/background.svg"
         width="1600"
+        height="530.4"
         className="hidden"
       />
       {maskText && (

@@ -4,9 +4,13 @@ export default function useCanvas(draw) {
   const canvasRef = useRef();
 
   const resizeCanvas = (canvas) => {
-    const { width, height } = canvas.getBoundingClientRect();
+    const { width, height, left, right, top, bottom } =
+      canvas.getBoundingClientRect();
 
-    if (canvas.width !== width || canvas.height !== height) {
+    if (
+      canvas.width !== Math.floor(width) ||
+      canvas.height !== Math.floor(height)
+    ) {
       const { devicePixelRatio: ratio = 1 } = window;
       const ctx = canvas.getContext("2d");
 
@@ -15,7 +19,7 @@ export default function useCanvas(draw) {
 
       ctx.scale(ratio, ratio);
 
-      return true;
+      return { left: left, right: right, top: top, bottom: bottom };
     }
 
     return false;
@@ -27,11 +31,13 @@ export default function useCanvas(draw) {
 
       let frameCount = 0;
       let animationFrameId;
+      let state = {};
 
       const render = () => {
-        resizeCanvas(ctx.canvas);
+        state = { ...state, ...resizeCanvas(ctx.canvas) };
 
-        draw(ctx, frameCount);
+        const newState = draw(ctx, state, frameCount);
+        state = newState;
 
         frameCount++;
         animationFrameId = window.requestAnimationFrame(render);

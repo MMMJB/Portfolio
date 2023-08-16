@@ -19,8 +19,10 @@ export default function Cursor() {
       posRef.current.x = e.pageX;
       posRef.current.y = e.pageY;
 
-      cursorRef.current.style.top = `${posRef.current.y}px`;
-      cursorRef.current.style.left = `${posRef.current.x}px`;
+      // cursorRef.current.style.top = `${posRef.current.y}px`;
+      // cursorRef.current.style.left = `${posRef.current.x}px`;
+      document.body.style.setProperty("--mX", `${posRef.current.x}px`);
+      document.body.style.setProperty("--mY", `${posRef.current.y}px`);
     };
 
     window.addEventListener("mousemove", onMouseMove);
@@ -34,6 +36,8 @@ export default function Cursor() {
         ref={cursorRef}
         style={{
           transform: `scale(${expanded ? 16 : 1})`,
+          left: "var(--mX)",
+          top: "var(--mY)",
         }}
         className="pointer-events-none absolute z-50 aspect-square w-2 rounded-full bg-cursor transition-transform duration-200"
       ></div>
