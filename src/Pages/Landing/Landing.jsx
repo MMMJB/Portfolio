@@ -2,6 +2,8 @@ import React, { useState, useEffect } from "react";
 
 import CodeMask from "./Components/CodeMask";
 
+import images from "../../Utils/images";
+
 const numLines = 32;
 
 export default function Landing() {
@@ -23,15 +25,25 @@ export default function Landing() {
 
   return (
     <div className="grid w-full place-items-center">
-      <img
-        id="background"
-        src="/Images/background.svg"
-        width="1600"
-        height="530.4"
-        className="hidden"
-      />
+      {images.map((img, i) => {
+        return (
+          <img
+            key={i}
+            id={img.name}
+            src={img.src}
+            width={img.width}
+            height={img.height}
+            className="hidden"
+          />
+        );
+      })}
       {maskText && (
-        <CodeMask styles="w-1/2 h-[50vh]" img="background" text={maskText} />
+        <CodeMask
+          styles="w-1/2"
+          img="background"
+          hoverImg="backgroundHover"
+          text={maskText}
+        />
       )}
     </div>
   );

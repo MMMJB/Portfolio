@@ -7,14 +7,14 @@ export default function Cursor() {
   });
   const cursorRef = useRef();
 
-  const [expanded, setExpanded] = useState(false);
+  const [scale, setScale] = useState(1);
 
   useEffect((_) => {
     const onMouseMove = (e) => {
       if (cursorRef.current === undefined) return;
 
-      const validHover = "maskImg" in e.target.dataset;
-      setExpanded(validHover);
+      const maskHover = e.target.id === "maskImg";
+      setScale(maskHover ? 0 : 1);
 
       posRef.current.x = e.pageX;
       posRef.current.y = e.pageY;
@@ -35,11 +35,11 @@ export default function Cursor() {
       <div
         ref={cursorRef}
         style={{
-          transform: `scale(${expanded ? 16 : 1})`,
+          transform: `scale(${scale})`,
           left: "var(--mX)",
           top: "var(--mY)",
         }}
-        className="pointer-events-none absolute z-50 aspect-square w-2 rounded-full bg-cursor transition-transform duration-200"
+        className="pointer-events-none absolute aspect-square w-2 rounded-full bg-cursor"
       ></div>
     )
   );

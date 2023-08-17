@@ -544,10 +544,6 @@ video {
   position: absolute;
 }
 
-.z-50{
-  z-index: 50;
-}
-
 .grid{
   display: grid;
 }
@@ -558,10 +554,6 @@ video {
 
 .aspect-square{
   aspect-ratio: 1 / 1;
-}
-
-.h-\[50vh\]{
-  height: 50vh;
 }
 
 .h-full{
@@ -616,16 +608,6 @@ video {
 .bg-cursor{
   --tw-bg-opacity: 1;
   background-color: rgb(52 64 77 / var(--tw-bg-opacity));
-}
-
-.transition-transform{
-  transition-property: transform;
-  transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
-  transition-duration: 150ms;
-}
-
-.duration-200{
-  transition-duration: 200ms;
 }
 
 @property --maskScale {
