@@ -2,27 +2,21 @@ import React, { useRef, useEffect } from "react";
 
 export default function useCanvas(draw) {
   const canvasRef = useRef();
+  const stateRef = useRef();
 
   const resizeCanvas = (canvas) => {
     const { width, height, left, right, top, bottom } =
       canvas.getBoundingClientRect();
 
-    if (
-      canvas.width !== Math.floor(width) ||
-      canvas.height !== Math.floor(height)
-    ) {
-      const { devicePixelRatio: ratio = 1 } = window;
-      const ctx = canvas.getContext("2d");
+    const { devicePixelRatio: ratio = 1 } = window;
+    const ctx = canvas.getContext("2d");
 
-      canvas.width = width * ratio;
-      canvas.height = height * ratio;
+    canvas.width = width * ratio;
+    canvas.height = height * ratio;
 
-      ctx.scale(ratio, ratio);
+    ctx.scale(ratio, ratio);
 
-      return { left: left, right: right, top: top, bottom: bottom };
-    }
-
-    return false;
+    return { left: left, right: right, top: top, bottom: bottom };
   };
 
   useEffect(
@@ -31,10 +25,10 @@ export default function useCanvas(draw) {
 
       let frameCount = 0;
       let animationFrameId;
-      let state = {};
+      let state = { ...resizeCanvas(ctx.canvas) };
 
       const render = () => {
-        state = { ...state, ...resizeCanvas(ctx.canvas) };
+        state = { ...state, ...stateRef.current };
 
         const newState = draw(ctx, state, frameCount);
         state = newState;
@@ -48,6 +42,14 @@ export default function useCanvas(draw) {
     },
     [draw],
   );
+
+  useEffect((_) => {
+    const onResize = (_) =>
+      (stateRef.current = { ...resizeCanvas(canvasRef.current) });
+    window.addEventListener("resize", onResize);
+
+    return (_) => window.removeEventListener("resize", onResize);
+  }, []);
 
   return canvasRef;
 }

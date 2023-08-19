@@ -14,7 +14,7 @@ export default function Cursor() {
       if (cursorRef.current === undefined) return;
 
       const maskHover = e.target.id === "maskImg";
-      setScale(maskHover ? 0 : 1);
+      setScale(maskHover ? 24 : 1);
 
       posRef.current.x = e.pageX;
       posRef.current.y = e.pageY;
@@ -39,7 +39,7 @@ export default function Cursor() {
           left: "var(--mX)",
           top: "var(--mY)",
         }}
-        className="pointer-events-none absolute aspect-square w-2 rounded-full bg-cursor"
+        className="pointer-events-none absolute aspect-square w-2 rounded-full bg-cursor transition-transform duration-200"
       ></div>
     )
   );

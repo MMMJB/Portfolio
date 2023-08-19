@@ -1,12 +1,24 @@
-import React, { useRef, useState, useEffect } from "react";
+import React from "react";
 
 import useCanvas from "../../../Hooks/useCanvas";
+
+import chars from "../../../Utils/chars";
+
+const hoverSize = 96;
+const attraction = 1;
 
 export default function CodeMask({ ...props }) {
   const { styles, text, img, hoverImg, ...rest } = props;
 
   const image = document.getElementById(img);
   const hoverImage = document.getElementById(hoverImg) || image;
+
+  const hoverText = Array.from(
+    text,
+    (e) => (e === "\n" && e) || chars[Math.floor(Math.random() * chars.length)],
+  )
+    .join("")
+    .split("\n");
 
   const getStyle = (property) => document.body.style.getPropertyValue(property);
 
@@ -47,9 +59,11 @@ export default function CodeMask({ ...props }) {
         const cX = 7 * ci;
         const cY = 12 * (li + 1);
 
-        const d = mS ? clamp(0, distFromMouse(cX, cY) / 10, 2) : 2;
+        const d = clamp(0, distFromMouse(cX, cY) / 10, attraction);
 
-        ctx.fillText(t, cX + d, cY + d);
+        const text = (d !== attraction && hoverText[li][ci]) || t;
+
+        ctx.fillText(text, cX, cY);
       }),
     );
 
@@ -77,8 +91,8 @@ export default function CodeMask({ ...props }) {
 
     const ox = parseInt(getStyle("--mX") || 0);
     const oy = parseInt(getStyle("--mY") || 0);
-    const x = clamp(left, ox, right) - left;
-    const y = clamp(top, oy, bottom) - top;
+    const x = /*clamp(left, ox, right)*/ ox - left + 4;
+    const y = /*clamp(top, oy, bottom)*/ oy - top + 4;
 
     const w = ctx.canvas.width;
     const h = ctx.canvas.height;
@@ -98,11 +112,11 @@ export default function CodeMask({ ...props }) {
 
     const maskScale = state["en_f"]
       ? elapsed <= frames
-        ? easeOutQuat(elapsed / frames) * 64
-        : 64
+        ? easeOutQuat(elapsed / frames) * hoverSize
+        : hoverSize
       : state["ex_f"]
       ? elapsed <= frames
-        ? 64 - easeOutQuat(elapsed / frames) * 64
+        ? hoverSize - easeOutQuat(elapsed / frames) * hoverSize
         : 0
       : 0;
 
