@@ -45,7 +45,7 @@ export default function CodeMask({ ...props }) {
     );
   };
 
-  const drawBackground = (ctx, mX, mY, mS) => {
+  const drawBackground = (ctx, mX, mY, mS, s) => {
     ctx.globalCompositeOperation = "destination-over";
 
     ctx.fillStyle = "#FFFFFF";
@@ -56,12 +56,15 @@ export default function CodeMask({ ...props }) {
     // text.split("\n").forEach((t, i) => ctx.fillText(t, 0, 16 * (i + 1)));
     text.split("\n").forEach((l, li) =>
       l.split("").forEach((t, ci) => {
-        const cX = 7 * ci;
+        // const cX = (li % 2) * ctx.canvas.width + ((li % 2) * 2 - 1) * -7 * ci;
+        // const cX = li % 2 === 0 ? ctx.canvas.width - 7 * ci : 7 * ci;
+        const cX = ctx.canvas.width - 7 * ci;
         const cY = 12 * (li + 1);
 
         const d = clamp(0, distFromMouse(cX, cY) / 10, attraction);
 
-        const text = (d !== attraction && hoverText[li][ci]) || t;
+        const scroll = (ci + Math.floor(s / 2)) % l.length;
+        const text = (d !== attraction && hoverText[li][scroll]) || l[scroll];
 
         ctx.fillText(text, cX, cY);
       }),
@@ -121,7 +124,7 @@ export default function CodeMask({ ...props }) {
       : 0;
 
     drawMouseMask(ctx, x, y, maskScale);
-    drawBackground(ctx, x, y, maskScale);
+    drawBackground(ctx, x, y, maskScale, f);
 
     // ctx.strokeStyle = "#1D2731";
     // ctx.lineWidth = 2;
