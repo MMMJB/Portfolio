@@ -6,7 +6,7 @@ import images from "../../Utils/images";
 import generateMaskText from "../../Utils/generateMaskText";
 
 const numLines = 47;
-const lineLength = 80;
+const lineLength = 85;
 
 export default function Landing() {
   const [maskText, setMaskText] = useState();

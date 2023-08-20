@@ -5,7 +5,7 @@ import useCanvas from "../../../Hooks/useCanvas";
 import chars from "../../../Utils/chars";
 
 const hoverSize = 96;
-const attraction = 1;
+const threshold = 1.5;
 
 export default function CodeMask({ ...props }) {
   const { styles, text, img, hoverImg, ...rest } = props;
@@ -13,6 +13,7 @@ export default function CodeMask({ ...props }) {
   const image = document.getElementById(img);
   const hoverImage = document.getElementById(hoverImg) || image;
 
+  const maskText = Array.from(text.split("\n"), (e) => e.split(""));
   const hoverText = Array.from(
     text,
     (e) => (e === "\n" && e) || chars[Math.floor(Math.random() * chars.length)],
@@ -46,6 +47,8 @@ export default function CodeMask({ ...props }) {
   };
 
   const drawBackground = (ctx, mX, mY, mS, s) => {
+    const start = Date.now();
+
     ctx.globalCompositeOperation = "destination-over";
 
     ctx.fillStyle = "#FFFFFF";
@@ -54,21 +57,25 @@ export default function CodeMask({ ...props }) {
     const distFromMouse = (x, y) => distFromCircle(x, y, mX, mY, mS);
 
     // text.split("\n").forEach((t, i) => ctx.fillText(t, 0, 16 * (i + 1)));
-    text.split("\n").forEach((l, li) =>
-      l.split("").forEach((t, ci) => {
-        // const cX = (li % 2) * ctx.canvas.width + ((li % 2) * 2 - 1) * -7 * ci;
-        // const cX = li % 2 === 0 ? ctx.canvas.width - 7 * ci : 7 * ci;
-        const cX = ctx.canvas.width - 7 * ci;
-        const cY = 12 * (li + 1);
+    maskText.forEach((l, li) => {
+      let line = "";
 
-        const d = clamp(0, distFromMouse(cX, cY) / 10, attraction);
+      l.forEach((t, ci) => {
+        const cX = 7 * ci - 12;
+        const cY = 12 * (li + 1) - 3;
 
-        const scroll = (ci + Math.floor(s / 2)) % l.length;
-        const text = (d !== attraction && hoverText[li][scroll]) || l[scroll];
+        const d = clamp(0, distFromMouse(cX, cY) / 10, threshold);
 
-        ctx.fillText(text, cX, cY);
-      }),
-    );
+        const scroll = (l.length - ci + Math.floor(s / 2)) % l.length;
+        // const scroll = ci;
+        const text = (d !== threshold && hoverText[li][scroll]) || l[scroll];
+
+        line += text;
+        // ctx.fillText(text, cX, cY);
+      });
+
+      ctx.fillText(line, 0, 12 * (li + 1));
+    });
 
     ctx.globalCompositeOperation = "source-in";
 
