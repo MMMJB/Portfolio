@@ -1,4 +1,4 @@
-@import url("https://fonts.googleapis.com/css2?family=Source+Code+Pro:wght@400;500;600&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Rubik:ital,wght@0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap");
 
 /*
 ! tailwindcss v3.3.3 | MIT License | https://tailwindcss.com
@@ -536,44 +536,52 @@ video {
   --tw-backdrop-sepia:  ;
 }
 
-.pointer-events-none{
-  pointer-events: none;
+.letter__clickable {
+  fill: #e5f2ff;
 }
 
 .absolute{
   position: absolute;
 }
 
-.z-10{
-  z-index: 10;
+.left-0{
+  left: 0px;
 }
 
-.grid{
-  display: grid;
+.top-0{
+  top: 0px;
 }
 
-.hidden{
-  display: none;
+.-z-10{
+  z-index: -10;
 }
 
-.aspect-square{
-  aspect-ratio: 1 / 1;
+.z-0{
+  z-index: 0;
+}
+
+.z-\[1\]{
+  z-index: 1;
+}
+
+.z-50{
+  z-index: 50;
+}
+
+.flex{
+  display: flex;
 }
 
 .h-full{
   height: 100%;
 }
 
+.h-screen{
+  height: 100vh;
+}
+
 .min-h-screen{
   min-height: 100vh;
-}
-
-.w-2{
-  width: 0.5rem;
-}
-
-.w-\[560px\]{
-  width: 560px;
 }
 
 .w-full{
@@ -584,28 +592,24 @@ video {
   width: 100vw;
 }
 
-.transform{
-  transform: translate(var(--tw-translate-x), var(--tw-translate-y)) rotate(var(--tw-rotate)) skewX(var(--tw-skew-x)) skewY(var(--tw-skew-y)) scaleX(var(--tw-scale-x)) scaleY(var(--tw-scale-y));
-}
-
-.cursor-none{
-  cursor: none;
-}
-
 .resize{
   resize: both;
 }
 
-.place-items-center{
-  place-items: center;
+.flex-col{
+  flex-direction: column;
+}
+
+.gap-6{
+  gap: 1.5rem;
 }
 
 .overflow-hidden{
   overflow: hidden;
 }
 
-.rounded-full{
-  border-radius: 9999px;
+.overflow-x-hidden{
+  overflow-x: hidden;
 }
 
 .bg-background{
@@ -613,31 +617,12 @@ video {
   background-color: rgb(29 39 49 / var(--tw-bg-opacity));
 }
 
-.bg-cursor{
-  --tw-bg-opacity: 1;
-  background-color: rgb(52 64 77 / var(--tw-bg-opacity));
+.p-6{
+  padding: 1.5rem;
 }
 
-.transition-transform{
-  transition-property: transform;
-  transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
-  transition-duration: 150ms;
-}
-
-.duration-200{
-  transition-duration: 200ms;
-}
-
-@property --maskScale {
-  syntax: "<length>";
-
-  initial-value: 64px;
-
-  inherits: false;
-}
-
-@keyframes maskClose {
-  to {
-    --maskSale: 0px;
-  }
+.shadow{
+  --tw-shadow: 0 1px 3px 0 rgb(0 0 0 / 0.1), 0 1px 2px -1px rgb(0 0 0 / 0.1);
+  --tw-shadow-colored: 0 1px 3px 0 var(--tw-shadow-color), 0 1px 2px -1px var(--tw-shadow-color);
+  box-shadow: var(--tw-ring-offset-shadow, 0 0 #0000), var(--tw-ring-shadow, 0 0 #0000), var(--tw-shadow);
 }
