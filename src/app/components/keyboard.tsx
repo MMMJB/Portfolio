@@ -37,13 +37,13 @@ export function Key({
       window.removeEventListener("keydown", keyDownHandler);
       window.removeEventListener("keyup", keyUpHandler);
     };
-  }, []);
+  }, [keyDownHandler, keyUpHandler]);
 
   return (
     <button
       className={`${pressed ? "bg-black text-white" : "bg-white text-black"} ${
         letter === " " ? "w-64" : "w-8"
-      } text-base h-8 font-mono rounded-lg border transition-colors duration-100 cursor-default`}
+      } text-base h-8 font-mono rounded-lg border transition-colors duration-100 cursor-default focus:outline-none`}
       tabIndex={-1}
     >
       {letter}
@@ -52,29 +52,65 @@ export function Key({
 }
 
 export default function Keyboard() {
-  const [replay, setReplay] = useState<KeyReplay | null>([
-    { key: "h", time: 0, type: "keydown" },
-    { key: "h", time: 100, type: "keyup" },
-    { key: "i", time: 200, type: "keydown" },
-    { key: "i", time: 300, type: "keyup" },
-  ]);
+  const [replay, setReplay] = useState<KeyReplay>([]);
   const [shifting, setShifting] = useState(false);
   const [capsLock, setCapsLock] = useState(false);
+  const [recording, setRecording] = useState(false);
+  const [playing, setPlaying] = useState(false);
+
+  function recordKeyPress(event: KeyboardEvent) {
+    event.preventDefault();
+
+    if (event.key === "r" && event.ctrlKey) {
+      setRecording(false);
+      setPlaying(true);
+
+      playReplay(replay, {
+        onComplete: () => {
+          setPlaying(false);
+        },
+      });
+
+      window.removeEventListener("keydown", recordKeyPress);
+      window.removeEventListener("keyup", recordKeyPress);
+
+      return;
+    }
+
+    const shift = event.shiftKey;
+    const caps = event.getModifierState("CapsLock");
+
+    setReplay((p) => [
+      ...p,
+      {
+        key: event.key,
+        modifiers: { shift, caps },
+        time: Date.now(),
+        type: event.type as "keydown" | "keyup",
+      },
+    ]);
+  }
 
   function checkKeyboardState(e: KeyboardEvent) {
     if (e.shiftKey !== shifting) setShifting(e.shiftKey);
     if (e.getModifierState("CapsLock") !== capsLock)
       setCapsLock(e.getModifierState("CapsLock"));
+    if (e.key === "r" && e.ctrlKey) {
+      e.preventDefault();
+
+      if (recording) return;
+
+      setRecording(true);
+      setReplay([]);
+
+      window.addEventListener("keydown", recordKeyPress);
+      window.addEventListener("keyup", recordKeyPress);
+    }
   }
 
   useEffect(() => {
     window.addEventListener("keydown", checkKeyboardState);
     window.addEventListener("keyup", checkKeyboardState);
-
-    if (replay)
-      playReplay(replay, {
-        onComplete: () => setReplay(null),
-      });
 
     return () => {
       window.removeEventListener("keydown", checkKeyboardState);
@@ -85,7 +121,7 @@ export default function Keyboard() {
   return (
     <div
       className={`${
-        replay ? "cursor-not-allowed opacity-50" : ""
+        playing ? "opacity-50" : ""
       } flex sticky bottom-16 flex-col gap-1 items-center transition-opacity`}
     >
       {(shifting ? shifted : unshifted).map((row, i) => (

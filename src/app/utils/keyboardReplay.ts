@@ -1,5 +1,8 @@
+export type modifiers = "shift" | "caps";
+
 export type KeyAction = {
   key: string;
+  modifiers: Record<modifiers, boolean>;
   time: number;
   type: "keydown" | "keyup";
 };
@@ -39,7 +42,13 @@ export function playReplay(
       timeout = window.setTimeout(play, time / speed);
       stack++;
       index++;
-      window.dispatchEvent(new KeyboardEvent(action.type, { key: action.key }));
+      window.dispatchEvent(
+        new KeyboardEvent(action.type, {
+          key: action.key,
+          shiftKey: action.modifiers["shift"],
+          modifierCapsLock: action.modifiers["caps"],
+        })
+      );
     } else if (loop) {
       index = 0;
       timeout = window.setTimeout(play, delay);
