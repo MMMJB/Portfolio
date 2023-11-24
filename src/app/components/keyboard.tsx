@@ -95,25 +95,34 @@ export default function Keyboard() {
     if (e.shiftKey !== shifting) setShifting(e.shiftKey);
     if (e.getModifierState("CapsLock") !== capsLock)
       setCapsLock(e.getModifierState("CapsLock"));
-    if (e.key === "r" && e.ctrlKey) {
-      e.preventDefault();
+  }
 
-      if (recording) return;
+  function genericKeyHandler(e: KeyboardEvent) {
+    if (e.key === "Backspace") Emitter.emit("keyPress", "Backspace");
+    // if (e.key === "r" && e.ctrlKey) {
+    //   e.preventDefault();
 
-      setRecording(true);
-      setReplay([]);
+    //   if (recording) return;
 
-      window.addEventListener("keydown", recordKeyPress);
-      window.addEventListener("keyup", recordKeyPress);
-    }
+    //   setRecording(true);
+    //   setReplay([]);
+
+    //   window.addEventListener("keydown", recordKeyPress);
+    //   window.addEventListener("keyup", recordKeyPress);
+    // }
   }
 
   useEffect(() => {
-    window.addEventListener("keydown", checkKeyboardState);
+    function keyDownHandler(e: KeyboardEvent) {
+      checkKeyboardState(e);
+      genericKeyHandler(e);
+    }
+
+    window.addEventListener("keydown", keyDownHandler);
     window.addEventListener("keyup", checkKeyboardState);
 
     return () => {
-      window.removeEventListener("keydown", checkKeyboardState);
+      window.removeEventListener("keydown", keyDownHandler);
       window.removeEventListener("keyup", checkKeyboardState);
     };
   }, [checkKeyboardState]);
@@ -130,7 +139,9 @@ export default function Keyboard() {
             <Key
               key={key}
               letter={!capsLock ? key : key.toUpperCase()}
-              onPress={() => Emitter.emit("keyPress", key)}
+              onPress={() =>
+                Emitter.emit("keyPress", !capsLock ? key : key.toUpperCase())
+              }
             />
           ))}
         </div>

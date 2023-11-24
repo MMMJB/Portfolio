@@ -1,3 +1,18 @@
+"use client";
+
+import { useState, useEffect } from "react";
+
+import Emitter from "./utils/emitter";
+
+import TextField from "./components/textField";
+
 export default function Landing() {
-  return <h1>hi</h1>;
+  const [text, setText] = useState("");
+
+  return (
+    <TextField
+      prompt="My name is Michael Beck."
+      className="text-2xl text-center w-full my-8"
+    />
+  );
 }
