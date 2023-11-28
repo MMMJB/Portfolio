@@ -1,5 +1,8 @@
 import { useState, useEffect } from "react";
 
+import { IonIcon } from "@ionic/react";
+import { returnDownBackOutline } from "ionicons/icons";
+
 import Emitter from "../utils/emitter";
 
 function Cursor() {
@@ -20,6 +23,18 @@ export default function TextField({
   const letters = prompt.split("");
 
   const [typed, setTyped] = useState("");
+
+  function evaluateLetters() {
+    const evaluated = letters.map((letter, i) => {
+      const typedLetter = typed[i];
+
+      if (typedLetter === undefined) return "untyped";
+      if (typedLetter === letter) return "correct";
+      return "incorrect";
+    });
+
+    Emitter.emit("typed", evaluated);
+  }
 
   function onKeyPress(key: string) {
     if (!focused) return;
@@ -42,6 +57,10 @@ export default function TextField({
     };
   }, [onKeyPress]);
 
+  useEffect(() => {
+    evaluateLetters();
+  }, [typed]);
+
   return (
     <p className={`relative font-light ${className || ""}`}>
       {letters.map((letter, i) => {
@@ -49,9 +68,9 @@ export default function TextField({
 
         return (
           <>
-            {i === typed.length && <Cursor />}
+            {i === typed.length && <Cursor key="cursor" />}
             <span
-              key={letter}
+              key={letter + i}
               className={
                 typedLetter === undefined
                   ? "text-gray-400"
@@ -63,7 +82,12 @@ export default function TextField({
               {letter}
             </span>
             {i === letters.length - 1 &&
-              typed.length - 1 === letters.length - 1 && <Cursor />}
+              typed.length - 1 === letters.length - 1 && (
+                <IonIcon
+                  icon={returnDownBackOutline}
+                  className="inline-block ml-2 translate-y-[.25em] text-gray-600 absolute animate-pulse"
+                />
+              )}
           </>
         );
       })}

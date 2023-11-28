@@ -130,13 +130,13 @@ export default function Keyboard() {
   }, [checkKeyboardState]);
 
   return (
-    <div className="w-full flex justify-center sticky bottom-16">
+    <div className="w-full flex justify-center sticky mb-16 bottom-0">
       <div
         className={`${
           playing ? "opacity-50" : ""
         } flex flex-col gap-1 items-center transition-opacity w-max`}
       >
-        <Progress correct={50} incorrect={1} total={100} />
+        <Progress />
         {(shifting ? shifted : unshifted).map((row, i) => (
           <div className="flex gap-1" key={i}>
             {row.map((key) => (

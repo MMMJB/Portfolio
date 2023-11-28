@@ -7,12 +7,12 @@ import Emitter from "./utils/emitter";
 import TextField from "./components/textField";
 
 export default function Landing() {
-  const [text, setText] = useState("");
-
   return (
-    <TextField
-      prompt="My name is Michael Beck."
-      className="text-2xl text-center w-full my-8"
-    />
+    <div className="py-16">
+      <TextField
+        prompt="My name is Michael Beck."
+        className="text-2xl text-center w-full"
+      />
+    </div>
   );
 }
