@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import React, { useState, useEffect } from "react";
 
 import { IonIcon } from "@ionic/react";
 import { returnDownBackOutline } from "ionicons/icons";
@@ -15,10 +15,12 @@ export default function TextField({
   prompt,
   focused = true,
   className,
+  style,
 }: {
   prompt: string;
   focused?: boolean;
   className?: string;
+  style?: React.CSSProperties;
 }) {
   const letters = prompt.split("");
 
@@ -43,6 +45,12 @@ export default function TextField({
       case "Backspace":
         setTyped((p) => p.slice(0, -1));
         break;
+      case "Enter":
+        if (typed.length !== letters.length) return;
+
+        Emitter.emit("complete", true);
+
+        break;
       default:
         if (typed.length < letters.length) setTyped((p) => p + key);
         break;
@@ -62,13 +70,18 @@ export default function TextField({
   }, [typed]);
 
   return (
-    <p className={`relative font-light ${className || ""}`}>
+    <p
+      className={`${focused ? "" : "opacity-10"} relative font-light ${
+        className || ""
+      }`}
+      style={style}
+    >
       {letters.map((letter, i) => {
         const typedLetter = typed[i];
 
         return (
           <>
-            {i === typed.length && <Cursor key="cursor" />}
+            {i === typed.length && focused && <Cursor key="cursor" />}
             <span
               key={letter + i}
               className={

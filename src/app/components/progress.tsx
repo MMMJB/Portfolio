@@ -90,11 +90,20 @@ export default function Progress() {
     setComplete(typedChars.length === chars.length);
   }
 
+  function reset() {
+    charsRef.current = [];
+    setBars([]);
+
+    setComplete(false);
+  }
+
   useEffect(() => {
     Emitter.on("typed", onTyped);
+    Emitter.on("complete", reset);
 
     return () => {
       Emitter.off("typed", onTyped);
+      Emitter.off("complete", reset);
     };
   }, [onTyped]);
 

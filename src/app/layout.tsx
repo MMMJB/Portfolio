@@ -32,7 +32,9 @@ export default function RootLayout({
         `}</style>
       </head>
       <body className={`${PublicSans.className} min-h-screen flex flex-col`}>
-        <main className="flex-grow">{children}</main>
+        <main className="flex-grow flex items-center justify-center">
+          {children}
+        </main>
         <Keyboard />
       </body>
     </html>

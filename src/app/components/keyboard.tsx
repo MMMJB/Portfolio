@@ -100,7 +100,10 @@ export default function Keyboard() {
   }
 
   function genericKeyHandler(e: KeyboardEvent) {
-    if (e.key === "Backspace") Emitter.emit("keyPress", "Backspace");
+    const whitelist = ["Backspace", "Enter"];
+
+    if (whitelist.includes(e.key)) Emitter.emit("keyPress", e.key);
+
     // if (e.key === "r" && e.ctrlKey) {
     //   e.preventDefault();
 
