@@ -2,6 +2,8 @@
 
 import { useState, useEffect } from "react";
 
+import Progress from "./progress";
+
 import Emitter from "../utils/emitter";
 
 import { shifted, unshifted } from "../utils/keyboardLayout";
@@ -43,7 +45,7 @@ export function Key({
     <button
       className={`${pressed ? "bg-black text-white" : "bg-white text-black"} ${
         letter === " " ? "w-64" : "w-8"
-      } text-base h-8 font-mono rounded-lg border transition-colors duration-100 cursor-default focus:outline-none`}
+      } text-base h-8 font-mono rounded-lg border transition-all duration-100 cursor-default focus:outline-none`}
       tabIndex={-1}
     >
       {letter}
@@ -128,24 +130,27 @@ export default function Keyboard() {
   }, [checkKeyboardState]);
 
   return (
-    <div
-      className={`${
-        playing ? "opacity-50" : ""
-      } flex sticky bottom-16 flex-col gap-1 items-center transition-opacity`}
-    >
-      {(shifting ? shifted : unshifted).map((row, i) => (
-        <div className="flex gap-1" key={i}>
-          {row.map((key) => (
-            <Key
-              key={key}
-              letter={!capsLock ? key : key.toUpperCase()}
-              onPress={() =>
-                Emitter.emit("keyPress", !capsLock ? key : key.toUpperCase())
-              }
-            />
-          ))}
-        </div>
-      ))}
+    <div className="w-full flex justify-center sticky bottom-16">
+      <div
+        className={`${
+          playing ? "opacity-50" : ""
+        } flex flex-col gap-1 items-center transition-opacity w-max`}
+      >
+        <Progress correct={50} incorrect={1} total={100} />
+        {(shifting ? shifted : unshifted).map((row, i) => (
+          <div className="flex gap-1" key={i}>
+            {row.map((key) => (
+              <Key
+                key={key}
+                letter={!capsLock ? key : key.toUpperCase()}
+                onPress={() =>
+                  Emitter.emit("keyPress", !capsLock ? key : key.toUpperCase())
+                }
+              />
+            ))}
+          </div>
+        ))}
+      </div>
     </div>
   );
 }

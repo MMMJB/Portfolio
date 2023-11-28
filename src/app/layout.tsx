@@ -1,9 +1,13 @@
 import "./globals.css";
 import type { Metadata } from "next";
-import { Azeret_Mono } from "next/font/google";
+import { Azeret_Mono, Public_Sans } from "next/font/google";
 
 import Keyboard from "./components/keyboard";
 
+const PublicSans = Public_Sans({
+  subsets: ["latin"],
+  weight: ["300", "400", "500", "600", "700"],
+});
 const AzeretMono = Azeret_Mono({
   subsets: ["latin"],
   weight: ["300", "400", "500", "600", "700"],
@@ -27,7 +31,7 @@ export default function RootLayout({
           }    
         `}</style>
       </head>
-      <body className="min-h-screen flex flex-col">
+      <body className={`${PublicSans.className} min-h-screen flex flex-col`}>
         <main className="flex-grow">{children}</main>
         <Keyboard />
       </body>

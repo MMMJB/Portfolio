@@ -2,6 +2,12 @@ import { useState, useEffect } from "react";
 
 import Emitter from "../utils/emitter";
 
+function Cursor() {
+  return (
+    <span className="inline-block border-r-2 border-black h-[1em] top-1/2 -translate-y-1/2 animate-blink absolute"></span>
+  );
+}
+
 export default function TextField({
   prompt,
   focused = true,
@@ -23,7 +29,7 @@ export default function TextField({
         setTyped((p) => p.slice(0, -1));
         break;
       default:
-        setTyped((p) => p + key);
+        if (typed.length < letters.length) setTyped((p) => p + key);
         break;
     }
   }
@@ -34,20 +40,18 @@ export default function TextField({
     return () => {
       Emitter.off("keyPress", onKeyPress);
     };
-  }, []);
+  }, [onKeyPress]);
 
   return (
-    <p className={`relative ${className || ""}`}>
+    <p className={`relative font-light ${className || ""}`}>
       {letters.map((letter, i) => {
         const typedLetter = typed[i];
 
         return (
           <>
-            {i === typed.length && (
-              <span className="inline-block border-r-2 border-black h-[1em] top-1/2 -translate-y-1/2 animate-blink absolute"></span>
-            )}
+            {i === typed.length && <Cursor />}
             <span
-              key={i}
+              key={letter}
               className={
                 typedLetter === undefined
                   ? "text-gray-400"
@@ -58,6 +62,8 @@ export default function TextField({
             >
               {letter}
             </span>
+            {i === letters.length - 1 &&
+              typed.length - 1 === letters.length - 1 && <Cursor />}
           </>
         );
       })}
