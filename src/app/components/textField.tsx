@@ -80,16 +80,20 @@ export default function TextField({
         const typedLetter = typed[i];
 
         return (
-          <>
-            {i === typed.length && focused && <Cursor key="cursor" />}
+          <React.Fragment key={letter + i}>
+            {i === typed.length && focused && <Cursor />}
             <span
-              key={letter + i}
               className={
                 typedLetter === undefined
                   ? "text-gray-400"
                   : typedLetter === letter
+<<<<<<< HEAD
                   ? "text-black"
                   : "text-red-500 underline"
+=======
+                    ? "text-black"
+                    : "text-red-400 underline"
+>>>>>>> d6bda7781115a0b25ca77dc61d1ea6f51c1cd9fe
               }
             >
               {letter}
@@ -101,7 +105,7 @@ export default function TextField({
                   className="inline-block ml-2 translate-y-[.25em] text-gray-600 absolute animate-pulse"
                 />
               )}
-          </>
+          </React.Fragment>
         );
       })}
     </p>
