@@ -89,7 +89,7 @@ export default function TextField({
                   ? "text-gray-400"
                   : typedLetter === letter
                   ? "text-black"
-                  : "text-red-400 underline"
+                  : "text-red-500 underline"
               }
             >
               {letter}

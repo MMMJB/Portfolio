@@ -21,7 +21,7 @@ function Bar({
         type === "correct"
           ? "bg-black"
           : type === "incorrect"
-          ? "bg-red-500"
+          ? "bg-red-400"
           : ""
       } h-full transition-[width] duration-200 ease-out`}
       style={{ width: `${width}%` }}

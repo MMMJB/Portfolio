@@ -19,7 +19,7 @@ export function Key({
   const [pressed, setPressed] = useState(false);
 
   function keyDownHandler(e: KeyboardEvent) {
-    if (e.key !== letter) return;
+    if (e.key !== letter || e.ctrlKey) return;
 
     onPress();
     setPressed(true);
