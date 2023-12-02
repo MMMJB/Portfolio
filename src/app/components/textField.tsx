@@ -87,13 +87,8 @@ export default function TextField({
                 typedLetter === undefined
                   ? "text-gray-400"
                   : typedLetter === letter
-<<<<<<< HEAD
                   ? "text-black"
                   : "text-red-500 underline"
-=======
-                    ? "text-black"
-                    : "text-red-400 underline"
->>>>>>> d6bda7781115a0b25ca77dc61d1ea6f51c1cd9fe
               }
             >
               {letter}
