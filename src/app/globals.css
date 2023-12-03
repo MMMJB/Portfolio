@@ -1,3 +1,10 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+html {
+  /* --theme-light: 255 246 246;
+  --theme-dark: 248 117 170; */
+  --theme-light: 255 255 255;
+  --theme-dark: 0 0 0;
+}

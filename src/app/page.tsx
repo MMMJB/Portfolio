@@ -36,8 +36,12 @@ export default function Landing() {
           key={i}
           prompt={prompt}
           focused={i === promptIndex}
-          style={{ transform: `translateY(${promptIndex * -100}%)` }}
-          className="text-2xl text-center w-full transition-transform duration-500"
+          style={{
+            transform: `translateY(${
+              (promptIndex * 3 - prompts.length) * -0.5
+            }em)`,
+          }}
+          className="text-2xl text-center w-full transition-transform ease-out duration-500"
         />
       ))}
     </div>

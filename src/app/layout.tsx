@@ -2,6 +2,7 @@ import "./globals.css";
 import type { Metadata } from "next";
 import { Azeret_Mono, Public_Sans } from "next/font/google";
 
+import Screen from "./components/screen";
 import Keyboard from "./components/keyboard";
 
 const PublicSans = Public_Sans({
@@ -23,7 +24,7 @@ export default function RootLayout({
   children: React.ReactNode;
 }) {
   return (
-    <html lang="en">
+    <html lang="en" className="scroll-smooth bg-light">
       <head>
         <style>{`
           .font-mono {
@@ -31,9 +32,11 @@ export default function RootLayout({
           }    
         `}</style>
       </head>
-      <body className={`${PublicSans.className} min-h-screen flex flex-col`}>
-        <main className="flex-grow flex items-center justify-center">
-          {children}
+      <body
+        className={`${PublicSans.className} min-h-screen flex flex-col h-screen overflow-hidden`}
+      >
+        <main className="flex-grow grid place-items-center px-3">
+          <Screen>{children}</Screen>
         </main>
         <Keyboard />
       </body>

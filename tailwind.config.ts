@@ -26,6 +26,10 @@ const config: Config = {
       animation: {
         blink: "blink 1.2s steps(1) infinite",
       },
+      colors: {
+        light: "rgb(var(--theme-light) / <alpha-value>)",
+        dark: "rgb(var(--theme-dark) / <alpha-value>)",
+      },
     },
   },
   plugins: [],

@@ -19,7 +19,7 @@ function Bar({
     <div
       className={`${rounded ? "rounded-r-full" : ""} ${
         type === "correct"
-          ? "bg-black"
+          ? "bg-dark"
           : type === "incorrect"
           ? "bg-red-400"
           : ""
@@ -70,6 +70,8 @@ export default function Progress() {
         ]);
       }
     } else {
+      if (bars.length === 0) return;
+
       if (
         Math.floor(bars[bars.length - 1].width) ===
         Math.floor(100 / chars.length)
@@ -111,7 +113,7 @@ export default function Progress() {
     <div
       className={`${
         complete && "opacity-50"
-      } w-full flex rounded-full h-2 bg-gray-200 transition-all duration-200 ease-out overflow-hidden`}
+      } w-full flex rounded-full h-3 border border-dark/10 transition-all duration-200 ease-out overflow-hidden`}
     >
       {bars.map((bar, i) => (
         <Bar

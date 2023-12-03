@@ -7,7 +7,7 @@ import Emitter from "../utils/emitter";
 
 function Cursor() {
   return (
-    <span className="inline-block border-r-2 border-black h-[1em] top-1/2 -translate-y-1/2 animate-blink absolute"></span>
+    <span className="inline-block border-r-2 border-dark h-[1em] top-1/2 -translate-y-1/2 animate-blink absolute"></span>
   );
 }
 
@@ -85,9 +85,9 @@ export default function TextField({
             <span
               className={
                 typedLetter === undefined
-                  ? "text-gray-400"
+                  ? "text-dark/30"
                   : typedLetter === letter
-                  ? "text-black"
+                  ? "text-dark"
                   : "text-red-500 underline"
               }
             >
@@ -97,7 +97,7 @@ export default function TextField({
               typed.length - 1 === letters.length - 1 && (
                 <IonIcon
                   icon={returnDownBackOutline}
-                  className="inline-block ml-2 translate-y-[.25em] text-gray-600 absolute animate-pulse"
+                  className="inline-block ml-2 translate-y-[.25em] text-dark/50 absolute animate-pulse"
                 />
               )}
           </React.Fragment>

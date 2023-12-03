@@ -43,9 +43,9 @@ export function Key({
 
   return (
     <button
-      className={`${pressed ? "bg-black text-white" : "bg-white text-black"} ${
+      className={`${pressed ? "bg-dark text-light" : "bg-light text-dark"} ${
         letter === " " ? "w-64" : "w-8"
-      } text-base h-8 font-mono rounded-lg border transition-all duration-100 cursor-default focus:outline-none`}
+      } text-base h-8 font-mono rounded-lg border border-dark/10 transition-all duration-100 cursor-default focus:outline-none`}
       tabIndex={-1}
     >
       {letter}
@@ -133,7 +133,7 @@ export default function Keyboard() {
   }, [checkKeyboardState]);
 
   return (
-    <div className="w-full flex justify-center sticky mb-16 bottom-0">
+    <div className="w-full sm:flex hidden justify-center sticky mb-16 bottom-0">
       <div
         className={`${
           playing ? "opacity-50" : ""
